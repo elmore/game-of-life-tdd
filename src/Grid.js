@@ -63,13 +63,13 @@ function Grid(doc, name) {
 	var _size = { x : 5, y : 5 }, 
 		_table = [];
 		
-	var onEachCell = function(action) {
+	var _onEachCell = function(action) {
 	
 		for(var x=1; x<=_size.x; x++) {
 		
 			for(var y=1; y<=_size.y; y++) {
 			
-				action(_table[y][x]);
+				action(_table[y][x], x, y);
 			}
 		}
 	};
@@ -97,7 +97,7 @@ function Grid(doc, name) {
 		return _table[y][x];
 	};
 	
-	var onOneOrALl = function(xOrArr, y, action) {
+	var onOneOrAll = function(xOrArr, y, action) {
 	
 		if(typeof(xOrArr) === 'object') {
 			
@@ -116,12 +116,12 @@ function Grid(doc, name) {
 	
 		set : function(x, y) {					
 			
-			onOneOrALl(x, y, function(cell) { cell.set(); });
+			onOneOrAll(x, y, function(cell) { cell.set(); });
 		},
 		
 		unset : function(x, y) {
 		
-			onOneOrALl(x, y, function(cell) { cell.unset(); });
+			onOneOrAll(x, y, function(cell) { cell.unset(); });
 		},
 		
 		render : function(el) {
@@ -141,9 +141,17 @@ function Grid(doc, name) {
 		
 		clear : function() {
 		
-			onEachCell(function(cell) {
+			_onEachCell(function(cell) {
 			
 				cell.unset();
+			});
+		},
+		
+		onEachCell : function(action) {
+		
+			_onEachCell(function(cell, x, y) {
+			
+				action(x, y);
 			});
 		}
 	};

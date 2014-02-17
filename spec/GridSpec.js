@@ -133,9 +133,31 @@ describe("Grid", function() {
 	expect(grid.isCellSet(1, 1)).not.toBeTruthy();
 	expect(grid.isCellSet(2, 5)).not.toBeTruthy();
 	expect(grid.isCellSet(3, 4)).not.toBeTruthy();
-	
-	
-	
   });
   
+  it("should expose iterator for all cells", function() {
+	
+	grid.setSize({ x : 3, y : 3 });
+	
+    grid.render(document.body);
+
+	var expectedCells = [null, [null, false, false, false],
+						[null, false, false, false],
+						[null, false, false, false]];
+	
+	grid.onEachCell(function(x, y) {
+		
+		expectedCells[x][y] = true;	
+	});
+	
+	expect(expectedCells[1][1]).toBeTruthy();
+	expect(expectedCells[1][2]).toBeTruthy();
+	expect(expectedCells[1][3]).toBeTruthy();
+	expect(expectedCells[2][1]).toBeTruthy();
+	expect(expectedCells[2][2]).toBeTruthy();
+	expect(expectedCells[2][3]).toBeTruthy();
+	expect(expectedCells[3][1]).toBeTruthy();
+	expect(expectedCells[3][2]).toBeTruthy();
+	expect(expectedCells[3][3]).toBeTruthy();
+  });	
 });

@@ -1,17 +1,6 @@
 
 function CoordinateHelper(size) {
 	
-	this.onEachCell = function(action) {
-	
-		for(var x=1; x<=size.x; x++) {
-		
-			for(var y=1; y<=size.y; y++) {
-			
-				action(x, y);
-			}
-		}
-	};
-		
 	this.onEachNeighbour = function(x, y, action) {
 	
 		var neighbours = getNeighbours(x, y);
@@ -117,7 +106,7 @@ function Game(grid) {
 			var toUnset = [];
 			var toSet = [];
 		
-			_gridHelp.onEachCell(function(x, y) {
+			grid.onEachCell(function(x, y) {
 			
 				if(grid.isCellSet(x, y) && 
 				(isVeryLonely(x, y) || isOverCrowded(x, y))) {
