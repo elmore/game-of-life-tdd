@@ -81,4 +81,61 @@ describe("Grid", function() {
 	expect(td).toHaveCss({ backgroundColor : 'rgb(255, 255, 255)' });
   });
   
+  it("should return correct state of a cell", function() {
+  
+    grid.render(document.body);
+  
+	grid.set(2, 2);
+	
+	expect(grid.isCellSet(2, 2)).toBeTruthy();
+  });
+  
+  it("should clear all cells when directed", function() {
+  
+    grid.render(document.body);
+	
+	grid.set(2, 2);
+	grid.set(5, 4);
+	grid.set(1, 5);
+	
+	expect(grid.isCellSet(2, 2)).toBeTruthy();
+	expect(grid.isCellSet(5, 4)).toBeTruthy();
+	expect(grid.isCellSet(1, 5)).toBeTruthy();
+	
+	grid.clear();
+	
+	expect(grid.isCellSet(2, 2)).not.toBeTruthy();
+	expect(grid.isCellSet(5, 4)).not.toBeTruthy();
+	expect(grid.isCellSet(1, 5)).not.toBeTruthy();
+	
+  });
+  
+  it("should accept an array of points to set", function() {
+  
+    grid.render(document.body);
+	
+	grid.set([{x: 1, y : 1}, { x : 2, y : 5} ,{ x : 3, y : 4}]);
+	
+	expect(grid.isCellSet(1, 1)).toBeTruthy();
+	expect(grid.isCellSet(2, 5)).toBeTruthy();
+	expect(grid.isCellSet(3, 4)).toBeTruthy();
+  
+  });
+  
+  it("should accept an array of points to unset", function() {
+  
+    grid.render(document.body);
+	
+	grid.set([{x: 1, y : 1}, { x : 2, y : 5} ,{ x : 3, y : 4}]);
+	
+	grid.unset([{x: 1, y : 1}, { x : 2, y : 5} ,{ x : 3, y : 4}]);
+	
+	expect(grid.isCellSet(1, 1)).not.toBeTruthy();
+	expect(grid.isCellSet(2, 5)).not.toBeTruthy();
+	expect(grid.isCellSet(3, 4)).not.toBeTruthy();
+	
+	
+	
+  });
+  
 });

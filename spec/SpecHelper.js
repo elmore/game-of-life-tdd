@@ -11,8 +11,7 @@ beforeEach(function () {
 		  var pass = true;
 		  
 		  for(var p in expected) {
-			console.log(actual.style[p]);
-			console.log(expected[p]);
+
 			pass &= actual.style[p] == expected[p];
 		  }
 		  

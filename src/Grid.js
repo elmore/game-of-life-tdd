@@ -10,15 +10,19 @@ function Cell(doc) {
 	_self.set = function() {
 	
 		_self.el.style.backgroundColor = '#888';
+		
+		_self.isSet = true;
 	};
 	
 	_self.unset = function() {
 	
 		_self.el.style.backgroundColor = '#fff';
+		
+		_self.isSet = false;
 	};
 	
 	$(_self.el).click(function() {
-		
+	
 		if(_self.isSet) {
 		
 			_self.unset();
@@ -28,8 +32,6 @@ function Cell(doc) {
 			_self.set();
 			
 		}
-		
-		_self.isSet = !_self.isSet;
 	});
 }
 
@@ -60,7 +62,18 @@ function Grid(doc, name) {
 
 	var _size = { x : 5, y : 5 }, 
 		_table = [];
-
+		
+	var onEachCell = function(action) {
+	
+		for(var x=1; x<=_size.x; x++) {
+		
+			for(var y=1; y<=_size.y; y++) {
+			
+				action(_table[y][x]);
+			}
+		}
+	};
+	
 	var makeTable = function(size) {
 	
 		var tbl = doc.createElement('table');
@@ -83,12 +96,32 @@ function Grid(doc, name) {
 	
 		set : function(x, y) {
 			
-			_table[y][x].set();
+			if(typeof(x) === 'object') {
+				
+				$(x).each(function(i, coords) {
+					
+					_table[coords.y][coords.x].set();
+				});
+				
+			} else {
+			
+				_table[y][x].set();
+			}
 		},
 		
 		unset : function(x, y) {
+		
+			if(typeof(x) === 'object') {
+				
+				$(x).each(function(i, coords) {
+					
+					_table[coords.y][coords.x].unset();
+				});
+				
+			} else {
 			
-			_table[y][x].unset();
+				_table[y][x].unset();
+			}
 		},
 		
 		render : function(el) {
@@ -99,7 +132,19 @@ function Grid(doc, name) {
 		setSize : function(size) {
 		
 			_size = size;
+		},
+		
+		isCellSet : function(x, y) {
+			
+			return _table[y][x].isSet;
+		},
+		
+		clear : function() {
+		
+			onEachCell(function(cell) {
+			
+				cell.unset();
+			});
 		}
-	
 	};
 }

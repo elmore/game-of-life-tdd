@@ -9,16 +9,28 @@
 	<script type="text/javascript" src="lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
 	
 	<script type="text/javascript" src="src/Grid.js"></script>
+	<script type="text/javascript" src="src/Game.js"></script>
 </head>
 <body>
 	
+	<button id="start-sim">START</button>
+	
 	<script type="text/javascript">
 	
-		var grd = new Grid(document, 'my-grid');
+		var grid = new Grid(document, 'my-grid');
+	  
+		var game = new Game(grid);
 		
-		grd.render(document.body);
+		$('#start-sim').click(function() {
+			
+			setInterval(function() {
+			
+				game.nextIteration();
+			}, 100);
+		});
 	
 	</script>
+	
 	
 	
 </body>

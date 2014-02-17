@@ -2,13 +2,11 @@
 
 #my-grid 
 {
-	width:500px;
-	height:500px;
 }
 
 #my-grid  td
 {
-	width:100px;
-	height:100px;
+	width:10px;
+	height:10px;
 	border:solid 1px #ccc;
 }
