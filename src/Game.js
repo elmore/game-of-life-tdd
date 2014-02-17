@@ -1,63 +1,4 @@
 
-function CoordinateHelper(size) {
-	
-	this.onEachNeighbour = function(x, y, action) {
-	
-		var neighbours = getNeighbours(x, y);
-						
-		for(var i=0; i<neighbours.length; i++) {
-		
-			action(neighbours[i].x, neighbours[i].y)
-		}
-	};
-	
-	var getNeighbours = function(x, y) {
-	
-		var neighbours = [];
-						
-		if(x < size.x) {
-		
-			neighbours.push({x : x+1, y : y});
-		}
-		
-		if(x > 1) {
-		
-			neighbours.push({x : x-1, y : y});
-		}
-		
-		if(y < size.y) {
-		
-			neighbours.push({x : x, y : y+1});
-		}
-		
-		if(y > 1) {
-		
-			neighbours.push({x : x, y : y-1});
-		}
-		
-		if(x < size.x && y < size.y) {
-		
-			neighbours.push({x : x+1, y : y+1});
-		}
-		
-		if(x < size.x && y > 1) {
-		
-			neighbours.push({x : x+1, y : y-1});
-		}
-		
-		if(x > 1 && y < size.y) {
-		
-			neighbours.push({x : x-1, y : y+1});
-		}
-		
-		if(x > 1 && y > 1) {
-		
-			neighbours.push({x : x-1, y : y-1});
-		}
-		
-		return neighbours;
-	};
-};
 
 function Game(grid) {
 
@@ -67,13 +8,11 @@ function Game(grid) {
 
 	grid.render(document.body);
 	
-	var _gridHelp = new CoordinateHelper(size);
-	
 	var countSetNeighbours = function(x, y) {
 	
 		var count = 0;
 	
-		_gridHelp.onEachNeighbour(x, y, function(nx, ny) {
+		grid.onEachNeighbourCell(x, y, function(nx, ny) {
 		
 			if(grid.isCellSet(nx, ny)) {
 			
@@ -121,15 +60,8 @@ function Game(grid) {
 				
 			});
 			
-			for(var i=0; i<toSet.length; i++) {
-			
-				grid.set(toSet[i].x, toSet[i].y);
-			}
-			
-			for(var i=0; i<toUnset.length; i++) {
-			
-				grid.unset(toUnset[i].x, toUnset[i].y);
-			}
+			grid.set(toSet);
+			grid.unset(toUnset);
 		}
 	};
 }

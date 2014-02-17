@@ -160,4 +160,32 @@ describe("Grid", function() {
 	expect(expectedCells[3][2]).toBeTruthy();
 	expect(expectedCells[3][3]).toBeTruthy();
   });	
+  
+  it("should expose iterator for neighbours", function() {
+  
+	grid.setSize({ x : 3, y : 3 });
+	
+    grid.render(document.body);
+	
+	var expectedCells = [null, [null, false, false, false],
+						[null, false, false, false],
+						[null, false, false, false]];
+						
+	grid.onEachNeighbourCell(2, 2, function(x, y) {
+		
+		expectedCells[x][y] = true;	
+	});
+	
+	expect(expectedCells[1][1]).toBeTruthy();
+	expect(expectedCells[1][2]).toBeTruthy();
+	expect(expectedCells[1][3]).toBeTruthy();
+	expect(expectedCells[2][1]).toBeTruthy();
+	expect(expectedCells[2][2]).not.toBeTruthy();
+	expect(expectedCells[2][3]).toBeTruthy();
+	expect(expectedCells[3][1]).toBeTruthy();
+	expect(expectedCells[3][2]).toBeTruthy();
+	expect(expectedCells[3][3]).toBeTruthy();
+	
+  });
+  
 });

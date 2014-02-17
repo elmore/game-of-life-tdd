@@ -62,7 +62,54 @@ function Grid(doc, name) {
 
 	var _size = { x : 5, y : 5 }, 
 		_table = [];
+	
+	var _getNeighbours = function(x, y) {
+	
+		var neighbours = [];
+						
+		if(x < _size.x) {
 		
+			neighbours.push({x : x+1, y : y});
+		}
+		
+		if(x > 1) {
+		
+			neighbours.push({x : x-1, y : y});
+		}
+		
+		if(y < _size.y) {
+		
+			neighbours.push({x : x, y : y+1});
+		}
+		
+		if(y > 1) {
+		
+			neighbours.push({x : x, y : y-1});
+		}
+		
+		if(x < _size.x && y < _size.y) {
+		
+			neighbours.push({x : x+1, y : y+1});
+		}
+		
+		if(x < _size.x && y > 1) {
+		
+			neighbours.push({x : x+1, y : y-1});
+		}
+		
+		if(x > 1 && y < _size.y) {
+		
+			neighbours.push({x : x-1, y : y+1});
+		}
+		
+		if(x > 1 && y > 1) {
+		
+			neighbours.push({x : x-1, y : y-1});
+		}
+		
+		return neighbours;
+	};
+	
 	var _onEachCell = function(action) {
 	
 		for(var x=1; x<=_size.x; x++) {
@@ -112,6 +159,16 @@ function Grid(doc, name) {
 		}
 	};
 	
+	var _onEachNeighbour = function(x, y, action) {
+	
+		var neighbours = _getNeighbours(x, y);
+						
+		for(var i=0; i<neighbours.length; i++) {
+		
+			action(neighbours[i]);
+		}
+	};	
+	
 	return {
 	
 		set : function(x, y) {					
@@ -153,6 +210,15 @@ function Grid(doc, name) {
 			
 				action(x, y);
 			});
+		},
+		
+		onEachNeighbourCell : function(x, y, action) {
+		
+			_onEachNeighbour(x, y, function(coords) {
+			
+				action(coords.x, coords.y);
+			});
+		
 		}
 	};
 }
