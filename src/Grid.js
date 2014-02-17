@@ -92,36 +92,36 @@ function Grid(doc, name) {
 		return tbl;
 	};
 
+	var getCell = function(x, y) {
+	
+		return _table[y][x];
+	};
+	
+	var onOneOrALl = function(xOrArr, y, action) {
+	
+		if(typeof(xOrArr) === 'object') {
+			
+			$(xOrArr).each(function(i, coords) {
+				
+				action(getCell(coords.x, coords.y));
+			});
+			
+		} else {
+			
+			action(getCell(xOrArr, y));
+		}
+	};
+	
 	return {
 	
-		set : function(x, y) {
+		set : function(x, y) {					
 			
-			if(typeof(x) === 'object') {
-				
-				$(x).each(function(i, coords) {
-					
-					_table[coords.y][coords.x].set();
-				});
-				
-			} else {
-			
-				_table[y][x].set();
-			}
+			onOneOrALl(x, y, function(cell) { cell.set(); });
 		},
 		
 		unset : function(x, y) {
 		
-			if(typeof(x) === 'object') {
-				
-				$(x).each(function(i, coords) {
-					
-					_table[coords.y][coords.x].unset();
-				});
-				
-			} else {
-			
-				_table[y][x].unset();
-			}
+			onOneOrALl(x, y, function(cell) { cell.unset(); });
 		},
 		
 		render : function(el) {
@@ -136,7 +136,7 @@ function Grid(doc, name) {
 		
 		isCellSet : function(x, y) {
 			
-			return _table[y][x].isSet;
+			return getCell(x, y).isSet;
 		},
 		
 		clear : function() {
