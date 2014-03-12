@@ -43,3 +43,40 @@ Example output:
 ...**...
 ...**...
 ........
+
+
+UI
+----
+
+There is an object called Grid which you can use to 
+interact with an HTML grid. Its fully tested and you 
+will see the tests when you run the spec runner.
+
+The grid has the following methods:
+
+
+void set(x, y) 	
+	Makes square black at x, y (indexed from 1, not 0)
+
+void unset(x, y) 
+	Makes square white
+
+void render(el) 
+	Draws the grid
+
+void setSize(size)
+	sets the width and height of the grid. size is an object eg:
+	size = { x : 5, y : 5 }
+
+bool isCellSet(x, y) 
+	returns true if the cell is black
+
+void clear()
+	turns all cells white
+
+void onEachCell(action)
+	calls the function 'action' once on each cell in the grid. 
+		
+void onEachNeighbourCell(x, y, action)
+	calls the function 'action' once on each of the neighbour 
+	cells of the cell x, y
