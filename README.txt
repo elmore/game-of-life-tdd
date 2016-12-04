@@ -5,7 +5,7 @@ TDD Exercise
 Resources 
 ---------
 
-http://pivotal.github.io/jasmine/
+https://jasmine.github.io/
 
 http://www.youtube.com/watch?v=XcuBvj0pw-E
 
